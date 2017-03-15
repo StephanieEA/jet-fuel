@@ -71,7 +71,7 @@ app.post('/api/v1/folders', (req, res) => {
   const id = md5(name)
 
   app.locals.folders.push({ id, name })
-  res.json({ id, name })
+  res.json(app.locals.folders)
 })
 
 // add a url to a specific folder
@@ -84,7 +84,8 @@ app.post('/api/v1/folders/:id/urls', (req, res) => {
   const visits = 0
 
   app.locals.urls.push({ id, folderId, source, short})
-  res.json({ id, folderId, source, short })
+  const urls = app.locals.urls.filter(url => url.folderId === folderId)
+  res.json(urls)
 })
 
 // redirect to the source of a shortened url

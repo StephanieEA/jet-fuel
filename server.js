@@ -79,11 +79,11 @@ app.post('/api/v1/folders/:id/urls', (req, res) => {
   const { source } = req.body
   const folderId = req.params.id
   const id = md5(source)
-  const short = `localhost:3000/${id}`
+  const short = `http://localhost:3000/${id}`
   const createdAt = Date.now()
   const visits = 0
 
-  app.locals.urls.push({ id, folderId, source, short})
+  app.locals.urls.push({ id, folderId, createdAt, visits, source, short})
   const urls = app.locals.urls.filter(url => url.folderId === folderId)
   res.json(urls)
 })
@@ -91,9 +91,10 @@ app.post('/api/v1/folders/:id/urls', (req, res) => {
 // redirect to the source of a shortened url
 app.get('/:id', (req, res) => {
   const { id } = req.params
+  console.log(id)
   const url = app.locals.urls.find(url => url.id === id)
   url.visits += 1
-  res.redirect(url.source)
+  res.redirect(`http://${url.source}`)
 })
 
 app.listen(app.get('port'), () => {

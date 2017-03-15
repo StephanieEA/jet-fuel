@@ -1,12 +1,14 @@
 const express = require('express')
 const md5 = require('md5')
 const bodyParser =require('body-parser')
-const app = express()
 const morgan = require('morgan')
+const chalk = require('chalk')
+const path = require('path')
+
+const app = express()
 
 app.set('port', process.env.PORT || 3000)
-
-app.use(express.static('public'))
+app.use(express.static(path.join(__dirname, 'public')))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(morgan('dev'))
@@ -23,14 +25,14 @@ app.locals.urls = [{
   id: md5('animals.com'),
   folderId: md5('animals'),
   source: 'http://animals.com',
-  short: `localhost:3000/${md5('animals.com')}`,
+  short: `http://localhost:3000/${md5('animals.com')}`,
   visits: 0,
   createdAt: Date.now()
 }, {
   id: md5('reptiles.com'),
   folderId: md5('reptiles'),
   source: 'http://reptiles.com',
-  short: `localhost:3000/${md5('reptiles.com')}`,
+  short: `http://localhost:3000/${md5('reptiles.com')}`,
   visits: 0,
   createdAt: Date.now()
 }]
@@ -94,5 +96,6 @@ app.get('/:id', (req, res) => {
 })
 
 app.listen(app.get('port'), () => {
-  console.log(`Express is running on ${app.get('port')}.`)
+  console.log(chalk.blue(`${app.get('host')}`))
+  console.log(chalk.yellow(`Jet-Fuel is running on ${app.get('port')}.`))
 })

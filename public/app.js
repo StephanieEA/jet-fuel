@@ -21,12 +21,8 @@ $(function() {
     })
 })
 
-
 foldersList.on('click', '.folder-button', function(e) {
   urlList.empty()
-  console.log('clicked!', e.target.id)
-
-  urlList.deleteEverything
 
   fetch(`http://localhost:3000/api/v1/folders/${e.target.id}/urls`)
     .then(res => res.json())
@@ -42,11 +38,8 @@ foldersList.on('click', '.folder-button', function(e) {
 addFolderButton.on('click', function(e) {
   e.preventDefault()
   console.log(folders)
-  //
-  // foldersList.append(folderInput.val())
 })
 
 addUrlButton.on('click', function(e) {
   e.preventDefault()
-  urlList.append(urlInput.val())
 })

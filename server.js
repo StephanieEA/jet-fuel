@@ -1,11 +1,17 @@
 const express = require('express')
 const md5 = require('md5')
 const bodyParser =require('body-parser')
+const morgan = require('morgan')
+const chalk = require('chalk')
+const path = require('path')
+
 const app = express()
 
-app.use(express.static('public'))
+app.set('port', process.env.PORT || 3000)
+app.use(express.static(path.join(__dirname, 'public')))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(morgan('dev'))
 
 app.locals.folders = [{
   id: md5('animals'),
@@ -19,14 +25,14 @@ app.locals.urls = [{
   id: md5('animals.com'),
   folderId: md5('animals'),
   source: 'http://animals.com',
-  short: `localhost:3000/${md5('animals.com')}`,
+  short: `http://localhost:3000/${md5('animals.com')}`,
   visits: 0,
   createdAt: Date.now()
 }, {
   id: md5('reptiles.com'),
   folderId: md5('reptiles'),
   source: 'http://reptiles.com',
-  short: `localhost:3000/${md5('reptiles.com')}`,
+  short: `http://localhost:3000/${md5('reptiles.com')}`,
   visits: 0,
   createdAt: Date.now()
 }]
@@ -60,7 +66,7 @@ app.get('/api/v1/folders/:id/urls', (req, res) => {
 })
 
 // add a folder
-app.post('/api/v1/folders', (req,res) => {
+app.post('/api/v1/folders', (req, res) => {
   const { name } = req.body
   const id = md5(name)
 
@@ -68,8 +74,8 @@ app.post('/api/v1/folders', (req,res) => {
   res.json({ id, name })
 })
 
-// add a url to a specific folders
-app.post('/api/v1/folders/:id/urls', (req,res) => {
+// add a url to a specific folder
+app.post('/api/v1/folders/:id/urls', (req, res) => {
   const { source } = req.body
   const folderId = req.params.id
   const id = md5(source)
@@ -81,7 +87,7 @@ app.post('/api/v1/folders/:id/urls', (req,res) => {
   res.json({ id, folderId, source, short })
 })
 
-// redirects to the source of a shortened url
+// redirect to the source of a shortened url
 app.get('/:id', (req, res) => {
   const { id } = req.params
   const url = app.locals.urls.find(url => url.id === id)
@@ -89,4 +95,7 @@ app.get('/:id', (req, res) => {
   res.redirect(url.source)
 })
 
-app.listen(3000, function(){console.log('listening on port 3000')})
+app.listen(app.get('port'), () => {
+  console.log(chalk.blue(`${app.get('host')}`))
+  console.log(chalk.yellow(`Jet-Fuel is running on ${app.get('port')}.`))
+})

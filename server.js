@@ -10,7 +10,6 @@ const configuration = require('./knexfile')[environment];
 const database = require('knex')(configuration);
 
 console.log(chalk.cyan.bold('ENV: ', environment))
-console.log(chalk.cyan.bold('database: ', database))
 
 const app = express()
 
@@ -130,7 +129,11 @@ app.get('/:id', (req, res) => {
   // TODO: url.visits += 1
 })
 
-app.listen(app.get('port'), () => {
-  console.log(chalk.blue(`${app.get('host')}`))
-  console.log(chalk.yellow(`Jet-Fuel is running on ${app.get('port')}.`))
-})
+if (!module.parent) {
+  app.listen(app.get('port'), () => {
+    console.log(chalk.blue(`${app.get('host')}`))
+    console.log(chalk.yellow(`Jet-Fuel is running on ${app.get('port')}.`))
+  })
+}
+
+module.exports = app

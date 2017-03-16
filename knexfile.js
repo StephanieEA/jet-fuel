@@ -3,9 +3,9 @@
 module.exports = {
 
   development: {
-    client: 'pg',
+    client: 'postgresql',
     connection: {
-      filename: 'postgres://localhost/jet-fuel'
+      database: 'jet-fuel'
     },
     migrations: {
       directory: './db/migrations'
@@ -17,8 +17,10 @@ module.exports = {
   },
 
   test: {
-    client: 'pg',
-    connection: 'postgres://localhost/jet-fuel_test',
+    client: 'postgresql',
+    connection: {
+      database: 'jet-fuel_test'
+    },
     migrations: {
       directory: './db/migrations'
     },
@@ -29,7 +31,7 @@ module.exports = {
   },
 
   production: {
-    client: 'pg',
+    client: 'postgresql',
     connection: process.env.DATABASE_URL,
     migrations: {
       directory: './db/migrations'

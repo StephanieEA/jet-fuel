@@ -20,7 +20,8 @@ $(function() {
       payload.forEach(folder => {
         foldersList.append(`<button id="${folder.id}" class="folder-button">
                               ${folder.name}
-                            </button>`)
+                            </button>
+                            <hr/>`)
       })
     })
 })
@@ -28,13 +29,21 @@ $(function() {
 foldersList.on('click', '.folder-button', function(e) {
   urlList.empty()
   activeFolder = e.target.id
+
+  $(this).siblings().removeClass('active')
+  $(this).addClass('active')
   fetch(`http://localhost:3000/api/v1/folders/${activeFolder}/urls`)
     .then(res => res.json())
     .then(payload => {
       payload.forEach(link => {
+
         urlList.append(`<li class="url-item">
-                          <a href="http://localhost:3000/${link.id}">link #${link.id}</a>
+                          <a href="${document.location}${link.id}">${document.location}${link.id}</a>
+                          <p> visits: ${link.visits} </p>
+                          <p> created_at: ${link.created_at} </p>
+                          <hr/>
                         </li>`)
+
     })
   })
 })
@@ -53,7 +62,10 @@ sortDateButton.on('click', function(e){
       }
       payload.forEach(link => {
         urlList.append(`<li class="url-item">
-                          <a href="http://localhost:3000/${link.id}">link #${link.id}</a>
+                          <a href="${document.location}${link.id}">${document.location}${link.id}</a>
+                          <p> visits: ${link.visits} </p>
+                          <p> created_at: ${link.created_at} </p>
+                          <hr/>
                         </li>`)
     })
   })
@@ -73,18 +85,21 @@ sortPopularityButton.on('click', function(e){
       }
       payload.forEach(link => {
         urlList.append(`<li class="url-item">
-                          <a href="http://localhost:3000/${link.id}">link #${link.id}</a>
+                          <a href="${document.location}${link.id}">${document.location}${link.id}</a>
+                          <p> visits: ${link.visits} </p>
+                          <p> created_at: ${link.created_at} </p>
+                          <hr/>
                         </li>`)
     })
   })
 })
 
 function sortDateAscending(a,b) {
-  return a.createdAt - b.createdAt
+  return a.created_at - b.created_at
 }
 
 function sortDateDescending(a,b) {
-  return b.createdAt - a.createdAt
+  return b.created_at - a.created_at
 }
 
 function sortPopularityAscending(a,b) {
@@ -113,7 +128,8 @@ addFolderButton.on('click', function(e) {
     payload.forEach(folder => {
       foldersList.append(`<button id="${folder.id}" class="folder-button">
                             ${folder.name}
-                          </button>`)
+                          </button>
+                          <hr/>`)
     })
   })
 })
@@ -136,7 +152,10 @@ addUrlButton.on('click', function(e) {
     urlList.empty()
     payload.forEach(link => {
       urlList.append(`<li class="url-item">
-                        <a href="http://localhost:3000/${link.id}">link #${link.id}</a>
+                        <a href="${document.location}${link.id}">${document.location}${link.id}</a>
+                        <p> visits: ${link.visits} </p>
+                        <p> created_at: ${link.created_at} </p>
+                        <hr/>
                       </li>`)
     })
   })

@@ -2,21 +2,31 @@
 <html>
   <head>
     <title>Jet Fuel</title>
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700|Patua+One|Rajdhani:600" rel="stylesheet">
+    <link href="./styles/normalize.css" rel="stylesheet">
+    <link href="./styles/main.css" rel="stylesheet">
   </head>
   <body>
-    <form class='add-folder-form'>
-      <input placeholder="folder input" class='folder-input'/>
-      <button class='button add-folder-button'>Submit</button>
-    </form>
-    <section class='folders-list'></section>
-    <section class='url-list-container'>
-      <form class='add-url-form'>
-        <input placeholder='add url' class='url-input'/>
-        <button class='button add-url-button'>Submit</button>
-      </form>
-      <button class='sort-popularity-button'>Popularity</button>
-      <button class='sort-date-button'>Date</button>
+    <section class='top'>
+      <section class='nav'>
+        <h1 class='app-title'>jetFuel</h1>
+      </section>
+      <section class='menu'>
+        <form class='add-folder-form'>
+          <input placeholder="add folder" class='input folder-input'/>
+          <button class='button add-folder-button'>Submit</button>
+        </form>
+        <form class='add-url-form'>
+          <input placeholder='add url' class='input url-input'/>
+          <button class='button add-url-button'>Submit</button>
+        </form>
+        <button class='button sort-popularity-button'>Popularity</button>
+        <button class='button sort-date-button'>Date</button>
+      </section>
+    </section>
+    <section class='content'>
       <ul class='url-list'></ul>
+      <section class='folders-list'></section>
     </section>
   </body>
   <script

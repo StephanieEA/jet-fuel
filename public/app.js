@@ -1,34 +1,65 @@
-const folderInput = $('.folder-input')
-const foldersList = $('.folders-list')
-const addFolderButton = $('.add-folder-button')
-const sortPopularityButton = $('.sort-popularity-button')
-const sortDateButton = $('.sort-date-button')
-
 const urlList = $('.url-list')
 const urlInput = $('.url-input')
 const addUrlButton = $('.add-url-button')
 
+const sortPopularityButton = $('.sort-popularity-button')
+const sortDateButton = $('.sort-date-button')
+
 let sortOrder = {date: 'desc', popularity: 'desc'}
-let activeFolder = undefined
-let folders = null
 let urls = null
 
-$(function() {
+const Folders = function () {
+  this.folderInput = $('.folder-input')
+  this.foldersList = $('.folders-list')
+  this.addFolderButton = $('.add-folder-button')
+  this.activeFolder = undefined
+  return this
+}
+
+Folders.prototype.addFolders = function (name) {
+  fetch('http://localhost:3000/api/v1/folders/',
+  {
+    method:'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      name: name
+    })
+  })
+  .then(res => res.json())
+  .then(payload => {
+    folders.foldersList.empty()
+    payload.forEach(folder => {
+      folders.foldersList.append(`<button id="${folder.id}" class="folder-button">
+        ${folder.name}
+      </button>`)
+    })
+  })
+}
+
+Folders.prototype.loadFolders = function () {
   fetch('http://localhost:3000/api/v1/folders')
     .then(res => res.json())
     .then(payload => {
       payload.forEach(folder => {
-        foldersList.append(`<button id="${folder.id}" class="folder-button">
+        folders.foldersList.append(`<button id="${folder.id}" class="folder-button">
                               ${folder.name}
                             </button>`)
       })
     })
+  }
+
+const folders = new Folders()
+
+$(function() {
+  folders.loadFolders()
 })
 
-foldersList.on('click', '.folder-button', function(e) {
+folders.foldersList.on('click', '.folder-button', function(e) {
   urlList.empty()
-  activeFolder = e.target.id
-  fetch(`http://localhost:3000/api/v1/folders/${activeFolder}/urls`)
+  Folders.activeFolder = e.target.id
+  fetch(`http://localhost:3000/api/v1/folders/${Folders.activeFolder}/urls`)
     .then(res => res.json())
     .then(payload => {
       payload.forEach(link => {
@@ -40,7 +71,7 @@ foldersList.on('click', '.folder-button', function(e) {
 })
 
 sortDateButton.on('click', function(e){
-  fetch(`http://localhost:3000/api/v1/folders/${activeFolder}/urls`)
+  fetch(`http://localhost:3000/api/v1/folders/${Folders.activeFolder}/urls`)
     .then(res => res.json())
     .then(payload => {
       urlList.empty()
@@ -60,7 +91,7 @@ sortDateButton.on('click', function(e){
 })
 
 sortPopularityButton.on('click', function(e){
-  fetch(`http://localhost:3000/api/v1/folders/${activeFolder}/urls`)
+  fetch(`http://localhost:3000/api/v1/folders/${Folders.activeFolder}/urls`)
     .then(res => res.json())
     .then(payload => {
       urlList.empty()
@@ -95,33 +126,16 @@ function sortPopularityDescending(a,b) {
   return b.visits - a.visits
 }
 
-addFolderButton.on('click', function(e) {
+folders.addFolderButton.on('click', function(e) {
   e.preventDefault()
-  fetch('http://localhost:3000/api/v1/folders/',
-    {
-      method:'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name: folderInput.val()
-      })
-    })
-  .then(res => res.json())
-  .then(payload => {
-    foldersList.empty()
-    payload.forEach(folder => {
-      foldersList.append(`<button id="${folder.id}" class="folder-button">
-                            ${folder.name}
-                          </button>`)
-    })
-  })
+  const name = folders.folderInput.val()
+  folders.addFolders(name)
 })
 
 addUrlButton.on('click', function(e) {
   e.preventDefault()
 
-  fetch(`http://localhost:3000/api/v1/folders/${activeFolder}/urls`,
+  fetch(`http://localhost:3000/api/v1/folders/${Folders.activeFolder}/urls`,
     {
       method:'POST',
       headers: {

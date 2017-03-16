@@ -4,6 +4,7 @@ const bodyParser =require('body-parser')
 const morgan = require('morgan')
 const chalk = require('chalk')
 const path = require('path')
+const moment = require('moment')
 
 const environment = process.env.NODE_ENV || 'development';
 const configuration = require('./knexfile')[environment];
@@ -35,6 +36,7 @@ app.get('/api/v1/folders', (req, res) => {
 app.get('/api/v1/urls', (req, res) => {
   database('urls').select()
     .then(function(urls) {
+      convertTimestamps(urls)
       res.status(200).json(urls);
     })
     .catch(function(error) {
@@ -60,8 +62,9 @@ app.get('/api/v1/folders/:id', (req, res) => {
 app.get('/api/v1/folders/:id/urls', (req, res) => {
   const { id } = req.params
   database('urls').where('folder_id', id)
-    .then(function(folders) {
-      res.status(200).json(folders);
+    .then(function(urls) {
+      convertTimestamps(urls)
+      res.status(200).json(urls);
     })
     .catch(function(error) {
       console.error(chalk.red('somethings wrong with db'))
@@ -95,13 +98,13 @@ app.post('/api/v1/folders/:id/urls', (req, res) => {
     .then(function() {
       database('urls').where('folder_id', folder_id)
         .then(function(urls) {
+          convertTimestamps(urls)
           res.status(200).json(urls);
         })
         .catch(function(error) {
           console.error(chalk.red('error adding a folder to db: ', JSON.stringify(error)))
         })
      })
-
 })
 
 // redirect to the long_url of a shortened url
@@ -133,6 +136,14 @@ if (!module.parent) {
   app.listen(app.get('port'), () => {
     console.log(chalk.blue(`${app.get('host')}`))
     console.log(chalk.yellow(`Jet-Fuel is running on ${app.get('port')}.`))
+  })
+}
+
+function convertTimestamps(urls) {
+  urls.map(url => {
+    const created_at = moment(url.created_at).unix()
+    const updated_at = moment(url.updated_at).unix()
+    return Object.assign(url, { created_at, updated_at })
   })
 }
 

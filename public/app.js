@@ -33,7 +33,7 @@ foldersList.on('click', '.folder-button', function(e) {
     .then(payload => {
       payload.forEach(link => {
         urlList.append(`<li class="url-item">
-                          <a href="${link.short}">${link.short}</a>
+                          <a href="http://localhost:3000/${link.id}">link #${link.id}</a>
                         </li>`)
     })
   })
@@ -53,7 +53,7 @@ sortDateButton.on('click', function(e){
       }
       payload.forEach(link => {
         urlList.append(`<li class="url-item">
-                          <a href="${link.short}">${link.short}</a>
+                          <a href="http://localhost:3000/${link.id}">link #${link.id}</a>
                         </li>`)
     })
   })
@@ -73,7 +73,7 @@ sortPopularityButton.on('click', function(e){
       }
       payload.forEach(link => {
         urlList.append(`<li class="url-item">
-                          <a href="${link.short}">${link.short}</a>
+                          <a href="http://localhost:3000/${link.id}">link #${link.id}</a>
                         </li>`)
     })
   })
@@ -128,7 +128,7 @@ addUrlButton.on('click', function(e) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        source: urlInput.val()
+        long_url: urlInput.val()
       })
     })
   .then(res => res.json())
@@ -136,7 +136,7 @@ addUrlButton.on('click', function(e) {
     urlList.empty()
     payload.forEach(link => {
       urlList.append(`<li class="url-item">
-                        <a href="${link.short}">${link.short}</a>
+                        <a href="http://localhost:3000/${link.id}">link #${link.id}</a>
                       </li>`)
     })
   })

@@ -1,13 +1,16 @@
-const environment = process.env.NODE_ENV || 'development';
-const configuration = require('./knexfile')[environment];
-const database = require('knex')(configuration);
-
 const express = require('express')
 const md5 = require('md5')
 const bodyParser =require('body-parser')
 const morgan = require('morgan')
 const chalk = require('chalk')
 const path = require('path')
+
+const environment = process.env.NODE_ENV || 'development';
+const configuration = require('./knexfile')[environment];
+const database = require('knex')(configuration);
+
+console.log(chalk.cyan.bold('ENV: ', environment))
+console.log(chalk.cyan.bold('database: ', database))
 
 const app = express()
 

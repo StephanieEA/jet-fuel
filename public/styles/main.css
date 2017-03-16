@@ -1,0 +1,192 @@
+
+html {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: 'Lato', 'Helvetica Neue', sans-serif;
+  max-width: 1000px;
+  margin: 0 auto;
+  font-weight: 300;
+  height: 100%;
+}
+
+button {
+  font-family: 'Lato', 'Helvetica Neue', sans-serif;
+}
+
+.top {
+  top: 0;
+  position: fixed;
+  margin: 0 auto;
+  max-width: 1000px;
+  background-color: white;
+}
+
+.nav {
+  /*border-bottom: 1px solid rgba(0, 0, 0, 0. 1);*/
+  margin: 0;
+  height: 50px;
+}
+
+.menu {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.content {
+  height: 100%;
+  margin-top: 60px;
+  width: inherit;
+}
+
+.app-title {
+  font-family: 'Patua One', cursive;
+
+  /*font-family: 'Rajdhani', sans-serif;*/
+  font-weight: 600;
+  font-size: 42px;
+  display: inline-block;
+  margin: 10px;
+  margin-right: 20px;
+}
+
+.add-folder-form, .add-url-form {
+  display: inline-block;
+  margin-right:   20px;
+  padding-right: 10px;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.button, .input {
+  margin: 10px;
+  padding: 10px 20px;
+  border: 0;
+  border-radius: 5px;
+  outline: 0;
+  font-size: 16px;
+}
+
+.button:hover {
+  cursor: pointer;
+}
+
+.add-folder-button, .add-url-button {
+   background-color: #27ae60;
+   color: white;
+}
+
+.add-folder-button:hover, .add-url-button:hover {
+   background-color: #2ecc71;
+}
+
+
+.folders-list {
+  display: inline-block;
+  float: left;
+  width: 44%;
+  max-height: 100%;
+  margin-top: 70px;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  overflow: auto;
+}
+
+.folders-list > button {
+}
+
+.url-list {
+  padding-left: 0;
+  display: inline-block;
+  float: right;
+  width: 55%;
+  height: 100%;
+  margin-top: 85px;
+  overflow: auto;
+}
+
+.input {
+  margin: 10px 0;
+  padding: 10px 20px;
+  border: 1px solid #bdc3c7;
+  border-radius: 5px;
+  outline: 0;
+  font-size: 16px;
+}
+
+.folder-button {
+  font-weight: 300;
+  display: block;
+  margin: 10px 0;
+  background: none;
+  border: 0;
+  color: #2980b9;
+  border-radius: 5px;
+  outline: 0;
+  font-size: 20px;
+}
+
+.folder-button:hover {
+  color: #3498db;
+  font-weight: 400;
+}
+
+.active {
+  font-weight: 700;
+  color: #E91E63;
+}
+
+.active:hover {
+  font-weight: 700;
+  color: #00E5FF;
+}
+
+.copy-button {
+  padding: 6px;
+  background-color: #e67e22;
+  color: white;
+  margin: 5px;
+  margin-left: 10px;
+}
+
+.copy-button:hover {
+  background-color: #f39c12;
+}
+
+.url-item {
+  max-width: 400px;
+  list-style-type: none;
+  margin-bottom: 10px;
+}
+
+hr {
+  width: 100  %;
+  height: 0;
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #bdc3c7;
+  font-weight: 300;
+}
+
+::-moz-placeholder { /* Firefox 19+ */
+  color: #bdc3c7;
+  font-weight: 300;
+}
+
+:-ms-input-placeholder { /* IE 10+ */
+  color: #bdc3c7;
+  font-weight: 300;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+  color: #bdc3c7;
+  font-weight: 300;
+}

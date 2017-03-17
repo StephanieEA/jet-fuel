@@ -50,7 +50,6 @@ const Url = function () {
   this.sortPopularityButton = $('.sort-popularity-button')
   this.sortDateButton = $('.sort-date-button')
   this.sortOrder = {date: 'desc', popularity: 'desc'}
-
   return this
 }
 
@@ -68,6 +67,26 @@ Url.prototype.sortPopularityAscending = function (a,b) {
 
 Url.prototype.sortPopularityDescending = function (a,b) {
   return b.visits - a.visits
+}
+
+Url.prototype.toggleSortByDate = function (payload) {
+  if (url.sortOrder.date === 'desc') {
+    payload.sort(url.sortDateAscending)
+    url.sortOrder.date = 'asc'
+  } else {
+    payload.sort(url.sortDateDescending)
+    url.sortOrder.date = 'desc'
+  }
+}
+
+Url.prototype.toggleSortByPopularity = function (payload) {
+  if (url.sortOrder.popularity === 'desc') {
+    payload.sort(url.sortPopularityAscending)
+    url.sortOrder.popularity = 'asc'
+  } else {
+    payload.sort(url.sortPopularityDescending)
+    url.sortOrder.popularity = 'desc'
+  }
 }
 
 Url.prototype.emptyUrls = function () {
@@ -109,14 +128,8 @@ url.sortDateButton.on('click', function(e){
   fetch(`http://localhost:3000/api/v1/folders/${Folders.activeFolder}/urls`)
     .then(res => res.json())
     .then(payload => {
-      url.urlList.empty()
-      if (url.sortOrder.date === 'desc') {
-        payload.sort(url.sortDateAscending)
-        url.sortOrder.date = 'asc'
-      } else {
-        payload.sort(url.sortDateDescending)
-        url.sortOrder.date = 'desc'
-      }
+      url.emptyUrls()
+      url.toggleSortByDate(payload)
       url.renderUrls(payload)
   })
 })
@@ -126,13 +139,7 @@ url.sortPopularityButton.on('click', function(e){
     .then(res => res.json())
     .then(payload => {
       url.emptyUrls()
-      if (url.sortOrder.popularity === 'desc') {
-        payload.sort(url.sortPopularityAscending)
-        url.sortOrder.popularity = 'asc'
-      } else {
-        payload.sort(url.sortPopularityDescending)
-        url.sortOrder.popularity = 'desc'
-      }
+      url.toggleSortByPopularity(payload)
       url.renderUrls(payload)
   })
 })
@@ -149,11 +156,11 @@ url.addUrlButton.on('click', function(e) {
         long_url: url.urlInput.val()
       })
     })
-  .then(res => res.json())
-  .then(payload => {
-    url.emptyUrls()
-    url.renderUrls(payload)
-  })
+    .then(res => res.json())
+    .then(payload => {
+      url.emptyUrls()
+      url.renderUrls(payload)
+    })
 })
 
 $(function() {

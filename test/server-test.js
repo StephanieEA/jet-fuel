@@ -1,7 +1,7 @@
-process.env.NODE_ENV = 'test';
-const config = require('../knexfile.js')['test'];
-const knex = require('knex')(config);
-const chai = require('chai');
+process.env.NODE_ENV = 'test'
+const config = require('../knexfile.js')['test']
+const knex = require('knex')(config)
+const chai = require('chai')
 const chaiHttp = require('chai-http')
 const expect = chai.expect
 const assert = chai.assert
@@ -166,7 +166,7 @@ describe('API Routes', function() {
   describe('GET /:id', function() {
     it('should redirect to the long_url associated with that id', function(done){
     chai.request(app)
-      .get(`/1`)
+      .get(`/2`)
       .end(function (err, res) {
         res.should.have.status(200);
         expect(res).to.redirect;

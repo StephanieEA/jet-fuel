@@ -1,7 +1,7 @@
-process.env.NODE_ENV = 'test';
-const config = require('../knexfile.js')['test'];
-const knex = require('knex')(config);
-const chai = require('chai');
+process.env.NODE_ENV = 'test'
+const config = require('../knexfile.js')['test']
+const knex = require('knex')(config)
+const chai = require('chai')
 const chaiHttp = require('chai-http')
 const expect = chai.expect
 const assert = chai.assert

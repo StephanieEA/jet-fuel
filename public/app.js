@@ -7,7 +7,7 @@ const Folders = function () {
 }
 
 Folders.prototype.addFolders = function (name) {
-  fetch('/api/v1/folders/',
+  fetch(`/api/v1/folders/`,
   {
     method:'POST',
     headers: {
@@ -29,7 +29,7 @@ Folders.prototype.addFolders = function (name) {
 }
 
 Folders.prototype.loadFolders = function () {
-  fetch('/api/v1/folders')
+  fetch(`/api/v1/folders`)
     .then(res => res.json())
     .then(payload => {
       payload.forEach(folder => {
@@ -96,7 +96,7 @@ Url.prototype.emptyUrls = function () {
 Url.prototype.renderUrls = function (payload) {
   payload.forEach(link => {
     url.urlList.append(`<li class="url-item">
-                      <a href="/${link.id}">${link.id}</a>
+                      <a href="/${link.id}">${document.location}${link.id}</a>
                       <p> visits: ${link.visits} </p>
                       <p> created_at: ${link.created_at} </p>
                       <hr/>

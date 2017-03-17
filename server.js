@@ -1,5 +1,4 @@
 const express = require('express')
-const md5 = require('md5')
 const bodyParser =require('body-parser')
 const morgan = require('morgan')
 const chalk = require('chalk')

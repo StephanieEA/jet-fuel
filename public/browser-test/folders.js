@@ -1,5 +1,14 @@
 describe('Folders', function() {
-  const stub = sinon.stub(Folders.prototype, 'loadFolders' )
+  let form
+  let display
+  const setupStub = sinon.stub(window, 'setup')
+  window.setup = function () {
+    // form = $('
+    //   <input placeholder="add folder" class="input folder-input"/>
+    //   <button class="button add-folder-button">Submit</button>');
+    display = $('<section class="folders-list"></section>');
+  }
+  const folderStub = sinon.stub(Folders.prototype, 'loadFolders' )
 
   it('is an Object', function(){
     chai.assert.isObject(folders);
@@ -33,8 +42,13 @@ describe('Folders', function() {
     chai.assert.isFunction(folders.loadFolders);
   });
 
-  it('should update the active Folder to the folder that has been clicked on', function(){
-
+  xit('should render folders correctly', function () {
+    console.log(folders.foldersList)
   });
 
-});
+  xit('should update the active Folder to the folder that has been clicked on', function(){
+  });
+
+  xit('should render database folders', function(){
+  });
+})

@@ -166,7 +166,7 @@ describe('API Routes', function() {
   describe('GET /:id', function() {
     it('should redirect to the long_url associated with that id', function(done){
     chai.request(app)
-      .get(`/1`)
+      .get(`/2`)
       .end(function (err, res) {
         res.should.have.status(200);
         expect(res).to.redirect;

@@ -17,7 +17,7 @@ const Folders = function () {
 }
 
 Folders.prototype.addFolders = function (name) {
-  fetch(`${document.location}api/v1/folders/`,
+  fetch(`/api/v1/folders/`,
   {
     method:'POST',
     headers: {
@@ -68,7 +68,7 @@ folders.foldersList.on('click', '.folder-button', function(e) {
       payload.forEach(link => {
 
         urlList.append(`<li class="url-item">
-                          <a href="${document.location}${link.id}">${document.location}${link.id}</a>
+                          <a href="/${link.id}">${document.location}${link.id}</a>
                           <p> visits: ${link.visits} </p>
                           <p> created_at: ${link.created_at} </p>
                           <hr/>
@@ -92,7 +92,7 @@ sortDateButton.on('click', function(e){
       }
       payload.forEach(link => {
         urlList.append(`<li class="url-item">
-                          <a href="${document.location}${link.id}">${document.location}${link.id}</a>
+                          <a href="/${link.id}">${document.location}${link.id}</a>
                           <p> visits: ${link.visits} </p>
                           <p> created_at: ${link.created_at} </p>
                           <hr/>
@@ -115,7 +115,7 @@ sortPopularityButton.on('click', function(e){
       }
       payload.forEach(link => {
         urlList.append(`<li class="url-item">
-                          <a href="${document.location}${link.id}">${document.location}${link.id}</a>
+                          <a href="/${link.id}">${document.location}${link.id}</a>
                           <p> visits: ${link.visits} </p>
                           <p> created_at: ${link.created_at} </p>
                           <hr/>

@@ -96,11 +96,7 @@ Url.prototype.emptyUrls = function () {
 Url.prototype.renderUrls = function (payload) {
   payload.forEach(link => {
     url.urlList.append(`<li class="url-item">
-<<<<<<< HEAD
                       <a href="/${link.id}">${link.id}</a>
-=======
-                      <a href="${document.location}${link.id}">${document.location}${link.id}</a>
->>>>>>> testing
                       <p> visits: ${link.visits} </p>
                       <p> created_at: ${link.created_at} </p>
                       <hr/>
@@ -129,11 +125,7 @@ folders.addFolderButton.on('click', function(e) {
 
 
 url.sortDateButton.on('click', function(e){
-<<<<<<< HEAD
   fetch(`/api/v1/folders/${Folders.activeFolder}/urls`)
-=======
-  fetch(`http://localhost:3000/api/v1/folders/${Folders.activeFolder}/urls`)
->>>>>>> testing
     .then(res => res.json())
     .then(payload => {
       url.emptyUrls()
@@ -143,11 +135,7 @@ url.sortDateButton.on('click', function(e){
 })
 
 url.sortPopularityButton.on('click', function(e){
-<<<<<<< HEAD
   fetch(`/api/v1/folders/${Folders.activeFolder}/urls`)
-=======
-  fetch(`http://localhost:3000/api/v1/folders/${Folders.activeFolder}/urls`)
->>>>>>> testing
     .then(res => res.json())
     .then(payload => {
       url.emptyUrls()
@@ -158,11 +146,7 @@ url.sortPopularityButton.on('click', function(e){
 
 url.addUrlButton.on('click', function(e) {
   e.preventDefault()
-<<<<<<< HEAD
   fetch(`/api/v1/folders/${Folders.activeFolder}/urls`,
-=======
-  fetch(`http://localhost:3000/api/v1/folders/${Folders.activeFolder}/urls`,
->>>>>>> testing
     {
       method:'POST',
       headers: {

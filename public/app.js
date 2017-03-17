@@ -96,7 +96,7 @@ Url.prototype.emptyUrls = function () {
 Url.prototype.renderUrls = function (payload) {
   payload.forEach(link => {
     url.urlList.append(`<li class="url-item">
-                      <a href="${/}${link.id}">${link.id}</a>
+                      <a href="/${link.id}">${link.id}</a>
                       <p> visits: ${link.visits} </p>
                       <p> created_at: ${link.created_at} </p>
                       <hr/>

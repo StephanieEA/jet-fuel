@@ -18,7 +18,7 @@ exports.up = function(knex, Promise) {
 
 exports.down = function(knex, Promise) {
   return Promise.all([
-       knex.schema.dropTable('urls'),
-       knex.schema.dropTable('folders')
+    knex.schema.dropTable('urls'),
+    knex.schema.dropTable('folders')
    ])
 };

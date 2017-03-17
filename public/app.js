@@ -1,12 +1,7 @@
-const urlList = $('.url-list')
-const urlInput = $('.url-input')
-const addUrlButton = $('.add-url-button')
-
 const sortPopularityButton = $('.sort-popularity-button')
 const sortDateButton = $('.sort-date-button')
 
 let sortOrder = {date: 'desc', popularity: 'desc'}
-let urls = null
 
 const Folders = function () {
   this.folderInput = $('.folder-input')
@@ -53,12 +48,17 @@ Folders.prototype.loadFolders = function () {
 
 const folders = new Folders()
 
-$(function() {
-  folders.loadFolders()
-})
+const Url = function () {
+  this.urlList = $('.url-list')
+  this.urlInput = $('.url-input')
+  this.addUrlButton = $('.add-url-button')
+  return this
+}
+
+const url = new Url()
 
 folders.foldersList.on('click', '.folder-button', function(e) {
-  urlList.empty()
+  url.urlList.empty()
   Folders.activeFolder = e.target.id
   $(this).addClass('active')
   $(this).siblings().removeClass('active')
@@ -67,7 +67,7 @@ folders.foldersList.on('click', '.folder-button', function(e) {
     .then(payload => {
       payload.forEach(link => {
 
-        urlList.append(`<li class="url-item">
+        url.urlList.append(`<li class="url-item">
                           <a href="${document.location}${link.id}">${document.location}${link.id}</a>
                           <p> visits: ${link.visits} </p>
                           <p> created_at: ${link.created_at} </p>
@@ -78,11 +78,18 @@ folders.foldersList.on('click', '.folder-button', function(e) {
   })
 })
 
+folders.addFolderButton.on('click', function(e) {
+  e.preventDefault()
+  const name = folders.folderInput.val()
+  folders.addFolders(name)
+})
+
+
 sortDateButton.on('click', function(e){
   fetch(`http://localhost:3000/api/v1/folders/${Folders.activeFolder}/urls`)
     .then(res => res.json())
     .then(payload => {
-      urlList.empty()
+      Url.urlList.empty()
       if (sortOrder.date === 'desc') {
         payload.sort(sortDateAscending)
         sortOrder.date = 'asc'
@@ -91,7 +98,7 @@ sortDateButton.on('click', function(e){
         sortOrder.date = 'desc'
       }
       payload.forEach(link => {
-        urlList.append(`<li class="url-item">
+        Url.urlList.append(`<li class="url-item">
                           <a href="${document.location}${link.id}">${document.location}${link.id}</a>
                           <p> visits: ${link.visits} </p>
                           <p> created_at: ${link.created_at} </p>
@@ -105,7 +112,7 @@ sortPopularityButton.on('click', function(e){
   fetch(`http://localhost:3000/api/v1/folders/${Folders.activeFolder}/urls`)
     .then(res => res.json())
     .then(payload => {
-      urlList.empty()
+      Url.urlList.empty()
       if (sortOrder.popularity === 'desc') {
         payload.sort(sortPopularityAscending)
         sortOrder.popularity = 'asc'
@@ -114,7 +121,7 @@ sortPopularityButton.on('click', function(e){
         sortOrder.popularity = 'desc'
       }
       payload.forEach(link => {
-        urlList.append(`<li class="url-item">
+        Url.urlList.append(`<li class="url-item">
                           <a href="${document.location}${link.id}">${document.location}${link.id}</a>
                           <p> visits: ${link.visits} </p>
                           <p> created_at: ${link.created_at} </p>
@@ -140,13 +147,7 @@ function sortPopularityDescending(a,b) {
   return b.visits - a.visits
 }
 
-folders.addFolderButton.on('click', function(e) {
-  e.preventDefault()
-  const name = folders.folderInput.val()
-  folders.addFolders(name)
-})
-
-addUrlButton.on('click', function(e) {
+url.addUrlButton.on('click', function(e) {
   e.preventDefault()
 
   fetch(`http://localhost:3000/api/v1/folders/${Folders.activeFolder}/urls`,
@@ -156,14 +157,14 @@ addUrlButton.on('click', function(e) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        long_url: urlInput.val()
+        long_url: url.urlInput.val()
       })
     })
   .then(res => res.json())
   .then(payload => {
-    urlList.empty()
+    url.urlList.empty()
     payload.forEach(link => {
-      urlList.append(`<li class="url-item">
+      url.urlList.append(`<li class="url-item">
                         <a href="${document.location}${link.id}">${document.location}${link.id}</a>
                         <p> visits: ${link.visits} </p>
                         <p> created_at: ${link.created_at} </p>
@@ -171,4 +172,9 @@ addUrlButton.on('click', function(e) {
                       </li>`)
     })
   })
+})
+
+
+$(function() {
+  folders.loadFolders()
 })

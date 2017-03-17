@@ -17,7 +17,7 @@ const Folders = function () {
 }
 
 Folders.prototype.addFolders = function (name) {
-  fetch('${document.location}/api/v1/folders/',
+  fetch(`${document.location}/api/v1/folders/`,
   {
     method:'POST',
     headers: {
@@ -39,7 +39,7 @@ Folders.prototype.addFolders = function (name) {
 }
 
 Folders.prototype.loadFolders = function () {
-  fetch('https://localhost:3000/api/v1/folders')
+  fetch(`${document.location}/api/v1/folders`)
     .then(res => res.json())
     .then(payload => {
       payload.forEach(folder => {

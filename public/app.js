@@ -17,7 +17,7 @@ const Folders = function () {
 }
 
 Folders.prototype.addFolders = function (name) {
-  fetch('http://localhost:3000/api/v1/folders/',
+  fetch('${document.location}/api/v1/folders/',
   {
     method:'POST',
     headers: {
@@ -39,7 +39,7 @@ Folders.prototype.addFolders = function (name) {
 }
 
 Folders.prototype.loadFolders = function () {
-  fetch('http://localhost:3000/api/v1/folders')
+  fetch('https://localhost:3000/api/v1/folders')
     .then(res => res.json())
     .then(payload => {
       payload.forEach(folder => {
@@ -62,7 +62,7 @@ folders.foldersList.on('click', '.folder-button', function(e) {
   Folders.activeFolder = e.target.id
   $(this).addClass('active')
   $(this).siblings().removeClass('active')
-  fetch(`http://localhost:3000/api/v1/folders/${Folders.activeFolder}/urls`)
+  fetch(`${document.location}/api/v1/folders/${Folders.activeFolder}/urls`)
     .then(res => res.json())
     .then(payload => {
       payload.forEach(link => {
@@ -79,7 +79,7 @@ folders.foldersList.on('click', '.folder-button', function(e) {
 })
 
 sortDateButton.on('click', function(e){
-  fetch(`http://localhost:3000/api/v1/folders/${Folders.activeFolder}/urls`)
+  fetch(`${document.location}/api/v1/folders/${Folders.activeFolder}/urls`)
     .then(res => res.json())
     .then(payload => {
       urlList.empty()
@@ -102,7 +102,7 @@ sortDateButton.on('click', function(e){
 })
 
 sortPopularityButton.on('click', function(e){
-  fetch(`http://localhost:3000/api/v1/folders/${Folders.activeFolder}/urls`)
+  fetch(`${document.location}/api/v1/folders/${Folders.activeFolder}/urls`)
     .then(res => res.json())
     .then(payload => {
       urlList.empty()
@@ -149,7 +149,7 @@ folders.addFolderButton.on('click', function(e) {
 addUrlButton.on('click', function(e) {
   e.preventDefault()
 
-  fetch(`http://localhost:3000/api/v1/folders/${Folders.activeFolder}/urls`,
+  fetch(`${document.location}/api/v1/folders/${Folders.activeFolder}/urls`,
     {
       method:'POST',
       headers: {

@@ -77,9 +77,9 @@ describe('Url', function() {
     chai.assert.isFunction(url.toggleSortByDate);
   });
 
-  xit('toggleSortByDate should sort the payload array based on the sortOrder.date and reassign sortOrder.date to be its opposite', function () {
-    const payload = [{},]
-    console.log(url.toggleSortByDate({}))
+  it('toggleSortByDate should sort the payload array based on the sortOrder.date and reassign sortOrder.date to be its opposite', function () {
+    let fakePayload = [{sortOrder: {date: 'desc', popularity: 'desc'}}]
+    console.log(url.toggleSortByDate(fakePayload))
   });
 
   it('should have a method called toggleSortByPopularity', function(){

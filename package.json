@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha test/**.js",
-    "start": "node server.js"
+    "start": "node server.js",
+    "lint" : "eslint **/*.js --ignore-path node_modules/",
   },
   "keywords": [],
   "author": "",

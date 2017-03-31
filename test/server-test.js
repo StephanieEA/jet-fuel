@@ -88,7 +88,7 @@ describe('API Routes', function() {
   describe('GET /api/v1/folders/:id', function() {
     it('should return a specific folder', function(done){
     chai.request(app)
-      .get(`/api/v1/folders/${1}`)
+      .get(`/api/v1/folders/1`)
       .end(function (err, res) {
         res.should.have.status(200);
         res.should.be.json;
@@ -149,6 +149,7 @@ describe('API Routes', function() {
       .post(`/api/v1/folders/${1}/urls`)
       .send({ long_url: 'www.turing.io' })
       .end(function (err, res) {
+        console.log(res)
         res.should.have.status(200);
         res.should.be.json;
         res.body.should.be.a('array');
